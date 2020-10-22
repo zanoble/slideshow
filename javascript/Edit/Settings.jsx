@@ -152,10 +152,18 @@ export default class Settings extends Component {
                   {colorPick}
                 </Col>
             </Row>
+            <Row>
+              <Col sm={6} className="settings-options">
+                Background Opacity
+              </Col>
+              
+            </Row>
             {/*<ColorSelect changeBackground={this.handleColorChange} />*/}
             <br></br>
             <Row>
-              <Col sm={6} className="settings-option">Slide Animation</Col>
+              <Col sm={6} className="settings-options">
+                Slide Animation
+              </Col>
               <Col>
                     <AnimateDropdown id={this.props.id} animation={this.props.animation} setAnimation={this.props.setAnimation}/>
               </Col>
