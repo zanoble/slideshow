@@ -12,12 +12,10 @@ export default function Background(props) {
     const [modalView, setModal] = useState(false)
 
     function insertMedia(fileWithMeta) {
-        console.log(fileWithMeta)
         let formData = new FormData()
         const showId = Number(window.sessionStorage.getItem('id'))
         const slideId = Number(window.sessionStorage.getItem('slideId'));
         let fMeta = fileWithMeta[0]
-        console.log(fMeta.file)
         formData.append('backgroundMedia', fMeta.file)
         formData.append('slideId', slideId)
         formData.append('id', showId)
@@ -36,6 +34,7 @@ export default function Background(props) {
                 alert("An error has occured with this image. Please try a different image.")
             }
         })
+        setModal(false)
     }
 
     function validate({meta}) {

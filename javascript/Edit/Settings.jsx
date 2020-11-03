@@ -152,11 +152,19 @@ export default class Settings extends Component {
                   {colorPick}
                 </Col>
             </Row>
-            <Row>
+            <Row style={{paddingTop: '10px'}}>
               <Col sm={6} className="settings-options">
                 Background Opacity
               </Col>
-              
+              <Col>
+                  <Form.Control as="select">
+                    <option>0.2</option>
+                    <option>0.4</option>
+                    <option>0.6</option>
+                    <option>0.8</option>
+                    <option>1.0</option>
+                 </Form.Control>
+               </Col>
             </Row>
             {/*<ColorSelect changeBackground={this.handleColorChange} />*/}
             <br></br>
