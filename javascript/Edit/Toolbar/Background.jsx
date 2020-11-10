@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Tippy from '@tippy.js/react'
 import { Modal, Row, Col } from 'react-bootstrap'
-import { CirclePicker } from 'react-color'
 import ColorSelect from '../AddOn/ColorSelect'
 import Dropzone from 'react-dropzone-uploader'
 

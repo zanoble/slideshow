@@ -14,7 +14,7 @@ import {
 import { CirclePicker, SketchPicker } from 'react-color';
 import AnimateDropdown from './AddOn/AnimateDropdown'
 import './custom.css'
-import ColorSelect from './AddOn/ColorSelect'
+import Dropzone from 'react-dropzone-uploader'
 
 export default class Settings extends Component {
   constructor(props) {
@@ -29,6 +29,8 @@ export default class Settings extends Component {
     this.handleColorChange = this.handleColorChange.bind(this)
     this.changeTime = this.changeTime.bind(this)
     this.handleSketchPicker = this.handleSketchPicker.bind(this)
+    this.validate = this.validate.bind(this)
+    this.insertMedia = this.insertMedia.bind(this)
   }
 
   componentDidUpdate(prevProps) {
@@ -64,6 +66,37 @@ export default class Settings extends Component {
   handleSketchPicker() {
     this.setState({displaySketchPicker: !this.state.displaySketchPicker})
   }
+
+  validate({meta}) {
+    if (meta.status === 'rejected_file_type') {
+        alert("Sorry, this file type is not supported")
+    }
+}
+
+ insertMedia(fileWithMeta) {
+  let formData = new FormData()
+  const showId = Number(window.sessionStorage.getItem('id'))
+  const slideId = Number(window.sessionStorage.getItem('slideId'));
+  let fMeta = fileWithMeta[0]
+  formData.append('backgroundMedia', fMeta.file)
+  formData.append('slideId', slideId)
+  formData.append('id', showId)
+
+  $.ajax({
+      url: './slideshow/Slide/background/' + slideId,
+      type: 'post',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: (imageUrl) => {
+          this.props.saveBackground(imageUrl)
+      },
+      error: (req, res) => {
+          console.error(res)
+          alert("An error has occured with this image. Please try a different image.")
+      }
+  })
+}
 
 
   render() {
@@ -151,6 +184,30 @@ export default class Settings extends Component {
                     </a>
                   {colorPick}
                 </Col>
+            </Row>
+            <Row style = {{paddingTop: '10px'}}>
+              <Col sm={6} className="settings-options">
+                Background Image
+              </Col>
+              <Col>
+              <div className="card">
+                    <div className="card-header text-center" >
+                        Upload
+                    </div>
+                    <Dropzone
+                        accept="image/jpeg,image/png,image/gif"
+                        maxFiles={1}
+                        multiple={false}
+                        minSizeBytes={1024}
+                        maxSizeBytes={18388608}
+                        onChangeStatus={this.validate}
+                        onSubmit={this.insertMedia}
+                        submitButtonContent={'Insert'}
+                        inputContent={''}
+                        classNames={{submitButton: 'btn btn-secondary btn-block drop', dropzone: 'drop'}}
+                    />
+                </div>
+              </Col>
             </Row>
             <Row style={{paddingTop: '10px'}}>
               <Col sm={6} className="settings-options">
